@@ -59,7 +59,7 @@ function App() {
   const uploadProductImage=async(file?:File)=>{
     if(!file)return;
     if(!['image/jpeg','image/png','image/webp'].includes(file.type)){setNotice('Please choose a JPG, PNG or WebP image.');return;}
-    if(file.size>5*1024*1024){setNotice('Please choose an image smaller than 5 MB.');return;}
+    if(file.size>3*1024*1024){setNotice('Please choose an image smaller than 3 MB.');return;}
     setBusy(true);
     try{
       const data=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>typeof reader.result==='string'?resolve(reader.result):reject(new Error('Could not read image.'));reader.onerror=()=>reject(new Error('Could not read image.'));reader.readAsDataURL(file);});
