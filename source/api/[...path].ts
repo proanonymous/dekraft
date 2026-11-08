@@ -65,7 +65,7 @@ export default async function handler(req:VercelRequest,res:VercelResponse){
    if(!process.env.BLOB_READ_WRITE_TOKEN)return fail(res,503,'Connect Vercel Blob to enable product image uploads.');
    const type=clean(b.contentType,80),data=clean(b.data,7000000),m=data.match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/);
    if(!['image/jpeg','image/png','image/webp'].includes(type)||!m||m[1]!==type)return fail(res,400,'Choose a valid JPG, PNG or WebP image.');
-   const bytes=Buffer.from(m[2],'base64');if(bytes.length>5*1024*1024)return fail(res,413,'Image must be smaller than 5 MB.');
+   const bytes=Buffer.from(m[2],'base64');if(bytes.length>3*1024*1024)return fail(res,413,'Image must be smaller than 3 MB.');
    const ext=type==='image/jpeg'?'jpg':type==='image/png'?'png':'webp';
    const blob=await put('product-images/'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,9)+'.'+ext,bytes,{access:'public',contentType:type});
    return res.status(201).json({imagePath:blob.url,image:blob.url});
