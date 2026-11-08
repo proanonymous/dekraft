@@ -1,0 +1,120 @@
+[
+  {
+    "name": "Browse products and save an order",
+    "sanity": true,
+    "viewport": "desktop",
+    "covers": [
+      "public product catalogue API",
+      "database product seeding and reads",
+      "order creation validation",
+      "order persistence",
+      "server-calculated order total"
+    ],
+    "description": "Verifies the public catalogue loads and checkout saves an order using a server-calculated total.",
+    "steps": [
+      "Browse the shop and add a product to the bag",
+      "Complete valid customer and delivery details",
+      "Submit the order",
+      "Sign in to the store dashboard and inspect the order"
+    ],
+    "expected": "The order is saved and appears in the store dashboard with the correct NGN total."
+  },
+  {
+    "name": "Store-owned password login replaces AppDeploy sign-in",
+    "viewport": "desktop",
+    "covers": [
+      "custom store password login",
+      "server-side password validation",
+      "no AppDeploy sign-in popup",
+      "reject unauthorised admin requests"
+    ],
+    "description": "Verifies the store dashboard uses its own password and rejects incorrect passwords.",
+    "steps": [
+      "Open Store admin from the footer",
+      "Enter an incorrect password",
+      "Enter the configured store password of at least 12 characters",
+      "Open the Products and Orders tabs"
+    ],
+    "expected": "Incorrect credentials are rejected, and only the configured store password opens management features."
+  },
+  {
+    "name": "Upload product photos and publish them in the catalogue",
+    "viewport": "desktop",
+    "covers": [
+      "admin-only product image upload",
+      "JPG PNG and WebP validation",
+      "5 MB upload limit",
+      "image storage persistence",
+      "product photo preview",
+      "image displayed in the public catalogue"
+    ],
+    "description": "Verifies an administrator can upload an actual product photo, preview it, save the product, and see it on the shop page.",
+    "steps": [
+      "Sign in to Store admin and open Products",
+      "Choose Add a product or Edit for an existing item",
+      "Upload a JPG, PNG or WebP product photo under 5 MB",
+      "Save the product and refresh the shop"
+    ],
+    "expected": "The photo is stored, the product editor shows a preview, and the product photo is visible in the public catalogue after refresh."
+  },
+  {
+    "name": "Edit product details and inventory",
+    "viewport": "desktop",
+    "covers": [
+      "product editing",
+      "product creation",
+      "price and stock updates",
+      "database persistence after refresh",
+      "preserve uploaded image path while editing"
+    ],
+    "description": "Verifies the store owner can update existing product names, categories, descriptions, prices, images and stock.",
+    "steps": [
+      "Sign in to Store admin",
+      "Open Products and choose Edit for an existing product",
+      "Change the price, description or stock and save",
+      "Refresh the dashboard and public catalogue"
+    ],
+    "expected": "The saved product changes remain visible in the dashboard and public catalogue."
+  },
+  {
+    "name": "WhatsApp-only checkout and order confirmation",
+    "viewport": "desktop",
+    "covers": [
+      "WhatsApp-only checkout handoff",
+      "visible order summary with item quantities and subtotal",
+      "delivery fee disclosure before payment",
+      "order details included in WhatsApp message",
+      "fallback to WhatsApp if order API fails",
+      "no payment-provider redirect"
+    ],
+    "description": "Verifies checkout always hands the customer to WhatsApp and still provides the order details if saving the order fails.",
+    "steps": [
+      "Submit an order with a valid email",
+      "Submit checkout with valid customer and delivery details",
+      "Confirm WhatsApp opens with the order details",
+      "Simulate an order API failure and confirm WhatsApp fallback still opens"
+    ],
+    "expected": "WhatsApp is the only checkout destination, including when the order API is temporarily unavailable."
+  },
+  {
+    "name": "Update fulfilment status and validate checkout",
+    "viewport": "mobile",
+    "covers": [
+      "order fulfilment status update",
+      "order status persistence",
+      "checkout required-field validation",
+      "responsive checkout form",
+      "mobile-friendly checkout summary and sign-in layout",
+      "visible product edit and delete controls",
+      "mobile-friendly product photo upload"
+    ],
+    "description": "Verifies invalid checkout details are rejected and an administrator can update an order's fulfilment status.",
+    "steps": [
+      "On mobile, submit checkout with a required field empty",
+      "Complete the customer details and save a valid order",
+      "In Store admin, set the order to Processing",
+      "Refresh the order list"
+    ],
+    "expected": "Incomplete checkout is rejected, while a valid order and its updated Processing status remain saved."
+  }
+]
